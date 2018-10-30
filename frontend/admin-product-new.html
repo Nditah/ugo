@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Product App</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>                        
+        </button>
+        <a class="navbar-brand" href="index.html">Home</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="admin-product-new.html">ADMIN</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div><h2> &nbsp;&nbsp;&nbsp; </h2> </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3 well well-lg">
+        <h3>Menu</h3>
+        <ul class="nav nav-pills nav-stacked">
+            <li><a href="index.html"><i class="fa fa-home fa-fw"></i>Home</a></li>
+            <li  class="active"><a href="admin-product-new.html"><i class="fa fa-file-o fa-fw"></i>New Product</a></li>
+            <li><a href="admin-product-all.html"><i class="fa fa-bar-chart-o fa-fw"></i>All Products</a></li>
+        </ul>
+      </div>
+    <!--form-->
+    <div class="col-md-9">
+        <form role="form" id="addForm" enctype="multipart/form-data">  
+          <h3 class="dark-grey">Product Registration</h3>
+          <div id="feedback" class="feedback"> <h1></h1></div>
+         <div class="row">
+        <div class="col-md-8">
+          
+          <div class="form-group col-lg-6">
+            <label>Product ID</label><span id="idSpan" class="label label-danger" style="display:none"> *required</span>
+            <input type="text" class="form-control" placeholder="Enter Product ID" name="productId" id="productId">
+          </div>
+          
+          <div class="form-group col-lg-6">
+            <label>Name</label><span id="nameSpan" class="label label-danger" style="display:none"> *required</span>
+            <input type="text" class="form-control" placeholder="Enter Product Name" name="productName" id="productName">
+          </div>
+          
+          <div class="form-group col-lg-12">
+            <label>Description</label><span id="descriptionSpan" class="label label-danger" style="display:none"> *required</span>
+              <input type="text" class="form-control" placeholder="Enter Product Description" name="productDescription" id="productDescription">
+          </div>
+                  
+          <div class="form-group col-lg-6">
+            <label>Price</label><span id="priceSpan" class="label label-danger" style="display:none"> *required</span>
+            <input type="number" class="form-control numbersOnly" placeholder="Enter Product Price" name="productPrice" id="productPrice">
+          </div>
+          
+          <div class="form-group col-lg-6">
+            <label>Category</label><span id="categorySpan" class="label label-danger" style="display:none"> *required</span>
+              <input class="form-control" placeholder="Enter Product Category" name="productCategory" id="productCategory">
+          </div>	
+          
+          <div class="form-group col-lg-6">
+            <label>Color</label><span id="colorSpan" class="label label-danger" style="display:none"> *required</span>
+               <input class="form-control" placeholder="Enter Product Color" name="productColor" id="productColor">
+          </div>
+        
+        
+        </div>
+      
+        <div class="col-md-4">
+          <label>Image</label><span id="imageSpan" class="label label-danger" style="display:none"> *required</span>
+              <input type="file"  name="productImage" id="productImage" />
+              <img id="imagePlaceholder" src="http://placehold.it/240x240" alt="Product image" class="thumb-image" />				
+        </div>
+      </div>
+      <!--/.row-->
+      <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+        <div class="btn-block">
+          <div class="pull-left"><button class="btn btn-lg btn-default" type="reset" >Reset</button></div>
+        <div class="">
+          <a id="submitBtn" class="btn btn-lg  btn-primary" onclick="preview()">Submit</a>
+        </div>
+      </div>
+      </div>
+    </div>
+  <!--/.row-->
+  </form>
+    </div>        
+   
+
+    <!--confirm-modal-->
+        <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                  <div class="modal-header">
+                      <h3 class="modal-title">Confirm Submit</h3>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <h4>Are you sure you want to submit the following product details?</h4>
+                        <div class="row">
+                          <div class="col-sm-6">
+                              <table class="table">
+                                  <tr><th>ID</th><td id="id"></td></tr>
+                                  <tr><th>Name</th><td id="name"></td></tr>
+                                  <tr><th>Description</th><td id="description"></td></tr>
+                                  <tr><th>Price</th><td id="price"></td></tr>
+                                  <tr><th>Category</th><td id="category"></td></tr>
+                                  <tr><th>Color</th><td id="color"></td></tr>
+                                  <tr><th>Image</th><td id="image"></td></tr>
+                              </table>
+                          </div>
+                          <div class="col-sm-6">
+                            <img id="imagePreview" class="thumb-preview" title="Product Image"/>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="pull-left">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        </div>
+                        <div class="pull-right">
+                            <a href="#" id="submit" class="btn btn-success success" onclick="addProduct();">Submit</a>
+                        </div>
+                      
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!--/.confirm-modal-->
+
+
+    <!--view-modal-->
+    <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content">
+              <!-- Modal Header -->
+            <div class="modal-header">
+                <h3 class="modal-title">View Modal</h3>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+              <div class="modal-body">
+                  <h4>The following product was created successfully?</h4>
+                  <div class="row">
+                    <div class="col-sm-6">
+                        <table class="table">
+                            <tr><th>ID</th><td id="id"></td></tr>
+                            <tr><th>Name</th><td id="name"></td></tr>
+                            <tr><th>Description</th><td id="description"></td></tr>
+                            <tr><th>Price</th><td id="price"></td></tr>
+                            <tr><th>Category</th><td id="category"></td></tr>
+                            <tr><th>Color</th><td id="color"></td></tr>
+                            <tr><th>Image</th><td id="image"></td></tr>
+                        </table>
+                    </div>
+                    <div class="col-sm-6">
+                      <img id="imagePreview" class="thumb-preview" title="Product Image"/>
+                    </div>
+                </div>
+              </div>
+          </div>
+      </div>
+  </div>
+<!--/.view-modal-->
+
+
+  </div>
+  <!--./row-->
+
+  <div class="row">
+    <br/>
+  </div>
+    <!--./row-->
+</div>
+<!--/.container-->
+<script src="product-ajax.js"></script>
+<script>
+// document.getElementById('productImage').addEventListener('change', handleFileSelect, false);
+$("#productImage").change(function() { readURL(this); });
+$('.numbersOnly').keyup(function () { 
+  this.value = this.value.replace(/[^0-9\.]/g,'');
+  })
+</script>
+
+</body>
+</html>
